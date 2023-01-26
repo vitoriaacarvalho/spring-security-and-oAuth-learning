@@ -8,8 +8,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.vitoria.services.UserDetailsServiceImpl;
+
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	
+	final UserDetailsServiceImpl userDetailsService;
+	
+	public WebSecurityConfig (UserDetailsServiceImpl userDetailsService) {
+		this.userDetailsService=userDetailsService;
+	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
@@ -24,10 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-		.withUser("vitoria")
-		.password(passwordEncoder().encode("vitoria123"))
-		.roles("ADMIN");
+		auth.userDetailsService(userDetailsService)
+		.passwordEncoder(passwordEncoder());  
 	}
 	
 	@Bean
