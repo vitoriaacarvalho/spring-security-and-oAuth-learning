@@ -1,120 +1,86 @@
 package com.vitoria.models;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.UUID;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name="users_table")
 public class Users implements UserDetails, Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private UUID id;
-	@Column(unique=true, nullable=false)
-	private String username;
-	@Column(nullable=false)
-	private String password;
-	
-	
-	/*
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-	
-	}
-	*/
+	  private static final long serialVersionUID = 1L;
 
-	@Override
-	public String getPassword() {
-		return this.password;
+	    @Id
+	    @GeneratedValue(strategy = GenerationType.AUTO)
+	    private UUID userId;
+	    @Column(nullable = false, unique = true)
+	    private String username;
+	    @Column(nullable = false)
+	    private String password;
+	    @ManyToMany
+	    @JoinTable(name = "TB_USERS_ROLES",
+	            joinColumns = @JoinColumn(name = "user_id"),
+	            inverseJoinColumns = @JoinColumn(name = "role_id"))
+	    private List<Roles> roles;
+
+
+	    public Users() {
 		
-	}
-	
+		}
 
-	@Override
-	public String getUsername() {
-		return this.username;
-	}
+		@Override
+	    public Collection<? extends GrantedAuthority> getAuthorities() {
+	        return this.roles;
+	    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	    @Override
+	    public String getPassword() {
+	        return this.password;
+	    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	    @Override
+	    public String getUsername() {
+	        return this.username;
+	    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	    @Override
+	    public boolean isAccountNonExpired() {
+	        return true;
+	    }
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	    @Override
+	    public boolean isAccountNonLocked() {
+	        return true;
+	    }
 
+	    @Override
+	    public boolean isCredentialsNonExpired() {
+	        return true;
+	    }
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	    @Override
+	    public boolean isEnabled() {
+	        return true;
+	    }
 
-	public Users(UUID id, String username, String password) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-	}
+	    public UUID getUserId() {
+	        return userId;
+	    }
 
-	public Users(){
-		
-	}
-	
-	
-	public UUID getId() {
-		return id;
-	}
+	    public void setUserId(UUID userId) {
+	        this.userId = userId;
+	    }
 
+	    public void setUsername(String username) {
+	        this.username = username;
+	    }
 
-	public void setId(UUID id) {
-		this.id = id;
-	}
-
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-
-
+	    public void setPassword(String password) {
+	        this.password = password;
+	    }
 }

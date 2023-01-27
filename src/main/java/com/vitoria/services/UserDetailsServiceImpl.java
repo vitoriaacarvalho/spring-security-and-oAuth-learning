@@ -1,14 +1,24 @@
 package com.vitoria.services;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.transaction.Transactional;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.vitoria.models.Roles;
 import com.vitoria.models.Users;
 import com.vitoria.repositories.UserRepository;
 
 @Service
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService{
 
 	final UserRepository repo;
@@ -23,7 +33,30 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		if(user==null) {
 			throw new UsernameNotFoundException("user not found with username: "+username);
 		}
-		return user;
+		return new Users(user.getUsername(),user.getPassword(), true, true, true,true, user.getAuthorities());
 	}
 
+	/*private void checkGrantAuthorities(Users user, List<GrantedAuthority> listGrantAuthority) {
+		if(user!=null && user.getAuthorities()!=null && user.getAuthorities().isEmpty()==false)
+				for(Roles roleUser : user.getAuthorities()){
+					final String PREFIX = "ROLE_";
+					String role = PREFIX + roleUser.getRoleDescription();
+					listGrantAuthority.add(new GrantedAuthorityImpl(role));	
+		
+				}
+		
+	*/	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 }
