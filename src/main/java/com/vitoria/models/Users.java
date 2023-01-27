@@ -26,7 +26,7 @@ public class Users implements UserDetails, Serializable {
 	    @JoinTable(name = "TB_USERS_ROLES",
 	            joinColumns = @JoinColumn(name = "user_id"),
 	            inverseJoinColumns = @JoinColumn(name = "role_id"))
-	    private List<Roles> roles;
+	    private List<Roles> authorities;
 
 
 	    public Users() {
@@ -35,7 +35,7 @@ public class Users implements UserDetails, Serializable {
 
 		@Override
 	    public Collection<? extends GrantedAuthority> getAuthorities() {
-	        return this.roles;
+	        return this.authorities;
 	    }
 
 	    @Override

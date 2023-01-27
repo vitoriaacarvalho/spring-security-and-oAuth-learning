@@ -12,8 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import com.vitoria.models.Roles;
+import org.springframework.security.core.userdetails.User;
 import com.vitoria.models.Users;
 import com.vitoria.repositories.UserRepository;
 
@@ -33,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		if(user==null) {
 			throw new UsernameNotFoundException("user not found with username: "+username);
 		}
-		return new Users(user.getUsername(),user.getPassword(), true, true, true,true, user.getAuthorities());
+		return new User(user.getUsername(),user.getPassword(), true, true, true,true, user.getAuthorities());
 	}
 
 	/*private void checkGrantAuthorities(Users user, List<GrantedAuthority> listGrantAuthority) {
@@ -46,17 +45,4 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 				}
 		
 	*/	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
 }
