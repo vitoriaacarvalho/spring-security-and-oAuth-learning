@@ -32,7 +32,7 @@ public class Roles implements GrantedAuthority, Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private UUID id;
+	private UUID roleId;
 	@Enumerated(EnumType.STRING)
 	@Column(nullable=false, unique=true)
 	private RoleName name;
