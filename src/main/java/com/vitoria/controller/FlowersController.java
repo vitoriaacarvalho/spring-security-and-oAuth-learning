@@ -28,14 +28,12 @@ public class FlowersController {
 	@Autowired
 	private FlowersRepository repo;
 	
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping
 	public ResponseEntity<List<Flowers>> findAll(){
 		List<Flowers> allFlowers=repo.findAll();
 		return ResponseEntity.ok().body(allFlowers);
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@PostMapping("/insert")
 	public ResponseEntity<Flowers> insert(@RequestBody Flowers flower){
 		Flowers entity=flower;
@@ -43,7 +41,6 @@ public class FlowersController {
 		return ResponseEntity.ok().body(entity);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Integer id){
 		repo.deleteById(id);

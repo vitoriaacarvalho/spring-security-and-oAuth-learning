@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.vitoria.models.RoleModel;
 
-public interface RoleRepository extends JpaRepository<RoleModel, Long> {
-	RoleModel findByRoleName(String roleName);
+public interface RoleRepository extends JpaRepository<RoleModel, Integer> {
+	RoleModel findByName(String name);
 }

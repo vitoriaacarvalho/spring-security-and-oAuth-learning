@@ -27,20 +27,17 @@ public class UserController {
 	@Autowired
 	private UserRepository repo;
 	
-	@PreAuthorize("permitAll()")
 	@GetMapping
 	public ResponseEntity<List<UserModel>> findAll(){
 		List<UserModel> users=repo.findAll();
 		return ResponseEntity.ok().body(users);
 	}
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping("/{username}")
 	public ResponseEntity<Optional<UserModel>> findByUsername(@RequestParam("username")String username){
 		Optional<UserModel> user=repo.findByUsername(username);
 		return ResponseEntity.ok().body(user);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/save")
 	public ResponseEntity<UserModel> insert(@RequestBody UserModel user){
 		UserModel entity=user;

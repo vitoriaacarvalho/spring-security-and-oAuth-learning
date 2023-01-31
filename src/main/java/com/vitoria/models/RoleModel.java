@@ -1,51 +1,48 @@
 package com.vitoria.models;
-import java.io.Serializable;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.security.core.GrantedAuthority;
-
-import com.vitoria.enums.RoleName;
 
 @Entity
-@Table(name = "TB_ROLE")
-public class RoleModel implements GrantedAuthority, Serializable {
-    private static final long serialVersionUID = 1L;
+@Table(name = "role_table")
+public class RoleModel{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID roleId;
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, unique = true)
-    private RoleName roleName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    
+    @Column(nullable = false)
+    private String name;
+    
+    
+    public RoleModel() {
+	}
+    
+	public RoleModel(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
+	public int getId() {
+		return id;
+	}
 
-    @Override
-    public String getAuthority() {
-        return this.roleName.toString();
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public UUID getRoleId() {
-        return roleId;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setRoleId(UUID roleId) {
-        this.roleId = roleId;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public RoleName getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(RoleName roleName) {
-        this.roleName = roleName;
-    }
+    
 }
